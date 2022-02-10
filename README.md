@@ -5,9 +5,10 @@ Smart Contracts are the back-end of your application that runs code and stores d
 			   but you can use any programming language and compile it to wasm.
 			   But here we will use Rust as it is a powerful language with a great developer experience.
             
- # Your first contract
+ ## Your first contract
 [status-message](https://github.com/near/near-sdk-rs/tree/master/examples/status-message):
 records the status messages of the accounts that call this contract.
+## variables and functions
 ```rust= 
     pub fn set_status(&mut self, message: String) {
         let account_id = env::signer_account_id();
@@ -17,15 +18,23 @@ records the status messages of the accounts that call this contract.
 ```
 This is a defination for [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) in rust, so here specifing a function name and signatures, set_status is a function with [String](https://doc.rust-lang.org/std/string/struct.String.html) type as input and no return type .
 First line in the [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) here calls function and creates [variable](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html) finally assigning the result to this variable, creating a varible in rust like any other language except the [mutability](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html).
+```rust=
+pub fn get_status(&self, account_id: AccountId) -> Option::<String> {
+        log!("get_status for account_id {}", account_id);
+        self.records.get(&account_id).cloned()
+    }
+```
+at line 3 we omtted ';' because in rust you can return value implictly like this or using [return](https://doc.rust-lang.org/std/keyword.return.html) keyword like any statement.
 
+## struct
 ```rust=
 pub struct StatusMessage {
     records: HashMap<AccountId, String>,
 }
 ```
-Rust is like any other other language has primative types like bool,i32,u32, [more types].. (https://doc.rust-lang.org/book/ch03-02-data-types.html), in addition to [user defined types](https://doc.rust-lang.org/rust-by-example/custom_types.html) like [struct](https://doc.rust-lang.org/rust-by-example/custom_types/structs.html).
+Rust is like any other other language has primative types like bool,i32,u32, [more types](https://doc.rust-lang.org/book/ch03-02-data-types.html), in addition to [user defined types](https://doc.rust-lang.org/rust-by-example/custom_types.html) like [struct](https://doc.rust-lang.org/rust-by-example/custom_types/structs.html).
 these lines define structure with name 'StatusMessage' with records as a [hashmap](https://doc.rust-lang.org/std/collections/struct.HashMap.html) member variable, hashmap is a custom variable that is built in the standard library of rust.
-
+## impl,ownership and borrowing
 ```rust=
 impl StatusMessage {
     #[payable]
@@ -45,4 +54,30 @@ in rust we can attach functions to the defined struct using [impl](https://doc.r
 Rust introduces new concept of [ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html) and [borrowing](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html) for example when you make the function take 'self' as a prameter so here you give the function the ownership for the current object instead of take a copy of it, but when you pass '&self' or '&mut self' here you make the function borrow the current object for lifetime of the function, as we mentioned before declarations of the variable determines the [mutability](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html) of the variable  so '&self' borrows the current object immutable so that it can't be changed and in this case called view method in smart contract code but '&mut self' borrows the current object so that it can't be changed so it is called change in the smart contract code.
 for example at line 6 we call 'insert' function in 'records' member of the current StatusMessage object so we understand that 'insert' function is member function for type of 'records', also we see that at this line we pass 'message' and 'account_id' to the function so here we give this function the ownership of these variable so you can't use them after this line but in other hand at line 11 we pass '&account_id' so it is called borrowing the variable to the function. 
 
-anther user define type here is the [enum](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html),enum in rust is like in other languages which represents named values except it can hold data, at line 9 we return '[Option](https://doc.rust-lang.org/std/option/)<[String](https://doc.rust-lang.org/std/string/struct.String.html)>' from the function so the function might return 'None' and it is equavelant to 'null' or return 'Some<String>' that has data.
+anther user define type here is the [enum](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html),enum in rust is like in other languages which represents named values except it can hold data, at line 9 we return '[Option](https://doc.rust-lang.org/std/option/)<[String](https://doc.rust-lang.org/std/string/struct.String.html)>' from the function so the function might return 'None' and it is equivalent to 'null' or return 'Some(String)' that has data.
+```rust=
+use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::{env, log, metadata, near_bindgen, AccountId};
+
+use std::collections::HashMap;
+```
+
+here,we are [importing](https://doc.rust-lang.org/reference/items/use-declarations.html) some structs,[traits](https://doc.rust-lang.org/book/ch10-02-traits.html) and other memebers from other libraries,also they are cold crates, but to import crate you must mention it in [Cargo.toml](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html) file.
+
+```rust=
+[package]
+name = "status-message"
+version = "0.1.0"
+authors = ["Near Inc <hello@nearprotocol.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+near-sdk = { path = "../../near-sdk" }
+```
+[Cargo.toml](https://doc.rust-lang.org/cargo/reference/config.html) has configuration for the rust project,
+ package section has fields that define metadata about the project.
+ [depenedencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html) section starting from line 10 has the external crates that used in the project so in line 10 we import 'near-sdk' from this relative path.
+lib section has configuration for the current lib crate, and "cdylib" means dynamic system library will be produced
