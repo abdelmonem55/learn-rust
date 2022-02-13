@@ -5,7 +5,7 @@ Smart Contracts are the back-end of your application that runs code and stores d
 			   but you can use any programming language and compile it to wasm.
 			   But here we will use Rust as it is a powerful language with a great developer experience.
 
-----
+---
 
  ## Your first contract
 [status-message](https://github.com/near/near-sdk-rs/tree/master/examples/status-message):
@@ -21,7 +21,7 @@ records the status messages of the accounts that call this contract.
 This is a defination for [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) in rust, so here specifing a function name and signatures, set_status is a function with [String](https://doc.rust-lang.org/std/string/struct.String.html) type as input and no return type .
 First line in the [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) here calls function and creates [variable](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html) finally assigning the result to this variable, creating a varible in rust like any other language except the [mutability](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html).
 
-----
+---
 
 ```rust=
 pub fn get_status(&self, account_id: AccountId) -> Option::<String> {
@@ -31,7 +31,7 @@ pub fn get_status(&self, account_id: AccountId) -> Option::<String> {
 ```
 at line 3 we omtted ';' because in rust you can return value implictly like this or using [return](https://doc.rust-lang.org/std/keyword.return.html) keyword like any statement.
 
-----
+---
 ## struct
 ```rust=
 pub struct StatusMessage {
@@ -41,7 +41,7 @@ pub struct StatusMessage {
 Rust is like any other other language has primative types like bool,i32,u32, [more types](https://doc.rust-lang.org/book/ch03-02-data-types.html), in addition to [user defined types](https://doc.rust-lang.org/rust-by-example/custom_types.html) like [struct](https://doc.rust-lang.org/rust-by-example/custom_types/structs.html).
 these lines define structure with name 'StatusMessage' with records as a [hashmap](https://doc.rust-lang.org/std/collections/struct.HashMap.html) member variable, hashmap is a custom variable that is built in the standard library of rust.
 
-----
+---
 
 ## impl,ownership and borrowing
 ```rust=
@@ -65,7 +65,7 @@ for example at line 6 we call 'insert' function in 'records' member of the curre
 
 anther user define type here is the [enum](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html),enum in rust is like in other languages which represents named values except it can hold data, at line 9 we return '[Option](https://doc.rust-lang.org/std/option/)<[String](https://doc.rust-lang.org/std/string/struct.String.html)>' from the function so the function might return 'None' and it is equivalent to 'null' or return 'Some(String)' that has data.
 
-----
+---
 ## importing
 ```rust=
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
@@ -76,7 +76,7 @@ use std::collections::HashMap;
 
 here,we are [importing](https://doc.rust-lang.org/reference/items/use-declarations.html) some structs,[traits](https://doc.rust-lang.org/book/ch10-02-traits.html) and other memebers from other libraries,also they are cold crates, but to import crate you must mention it in [Cargo.toml](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html) file.
 
-----
+---
 
 ```toml=
 [package]
@@ -96,7 +96,7 @@ near-sdk = { path = "../../near-sdk" }
  [depenedencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html) section starting from line 10 has the external crates that used in the project so in line 10 we import 'near-sdk' from this relative path.
 lib section has configuration for the current lib crate, and "cdylib" means dynamic system library will be produced.
 
-----
+---
 [mission-control](https://github.com/near/near-sdk-rs/tree/master/examples/mission-control):implements simulation of a distributed network of drones interacting with the mission control system.
 ## if condtion and loops
 ```rust=
@@ -124,7 +124,7 @@ as we see at 2th and 4th we didn't put ';' and as we mention previously it's exp
 ```
 here we use [for](https://doc.rust-lang.org/rust-by-example/flow_control/for.html) to loop over keys, in rust we can loop over [iterators](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
 
-----
+---
 ## enums
 ```rust=
  pub enum Tranx {
@@ -159,7 +159,7 @@ if let Some(Tranx::Approved(buyer, _)) = exs.iter().find_map(|ex| {
 ```
 [if let](https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html) used in matching againest enums like 'match' expression but it's best practice to use it in case of match againest only one member other wise use 'match', and here is an example of how to uses it to match againest 'Option' enum type. line 3 learn us how to access enum type variabe and it's data.
 
-----
+---
 ## modules
 
 ```rust=
@@ -175,7 +175,7 @@ mod rate;
 This smart contract code is designed in multi-<a href="https://doc.rust-lang.org/rust-by-example/mod.html">modules</a>
                   and the root of the crate is lib.rs combine them all.
 
-----                  
+---                  
 ## traits and generics
 rust is not object oriented language but has [traits](https://doc.rust-lang.org/book/ch10-02-traits.html) that can be used to define shared behavior.
 ```rust=
@@ -253,7 +253,6 @@ we will investigate smart contracts that has warrnings and errors appear when us
 we will investigate [status message collection](https://github.com/near/near-sdk-rs/tree/master/examples/status-message-collections):
                records the status messages of the accounts that call this contract.
  
- ---
  when you compile the following code you will get following errors
  ```rust
 use near_sdk::collections::{LookupMap, LookupSet};
@@ -294,8 +293,9 @@ impl StatusMessage {
         self.records.get(&account_id);
     }
 }
-
--first error
+```
+----
+### first error
 
 ```
 error: cannot find derive macro `BorshSerialize` in this scope
@@ -310,3 +310,4 @@ error: cannot find derive macro `BorshSerialize` in this scope
     12 | #[derive(BorshDeserialize, BorshSerialize)]
        |          ^^^^^^^^^^^^^^^^
 ```
+----
