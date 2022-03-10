@@ -5,7 +5,7 @@
     }
 </style>
 
-# Learn rust with NEAR
+# Learn rust with NEAR (voting)
 
 [voting](https://github.com/near/core-contracts/tree/master/voting): The purpose of this contract is solely for validators to vote on whether to unlock token transfer. Validators can call vote to vote for yes with the amount of stake they wish to put on the vote. If there are more than 2/3 of the stake at any given moment voting for yes, the voting is done. After
 
@@ -27,17 +27,7 @@ Rust has variables like any other language such as primatives and non-primatives
  assert_eq!(contract.votes.len() as u128, i + 1);
 ```
 
-here we are getting length as usize and cast it to u128 so we use keyword 'as'for casting
-
-----
-
-### [const](https://doc.rust-lang.org/std/keyword.const.html)
-
-```rs=7
-static ALLOC: near_sdk::wee_alloc::WeeAlloc = near_sdk::wee_alloc::WeeAlloc::INIT;
-```
-
-Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code, for example here we define a const as 'ALLOC'.
+here we are getting length as usize and cast it to u128 so we use keyword 'as'for casting.
 
 ----
 
@@ -47,7 +37,7 @@ Rust has compile time const that recommended to be used with values that used ma
 static ALLOC: near_sdk::wee_alloc::WeeAlloc = near_sdk::wee_alloc::WeeAlloc::INIT;
 ```
 
-Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code,also note that using static favour const when we have data with big size
+Rust has run time const that recommended to be used with values that used many times in addition to it gives readablity for the code,also note that using static favour const when we have data with big size.
 
 ----
 
@@ -86,7 +76,7 @@ vector is a dynamic list of homogeneous data stored in the heap, so here we are 
  votes: HashMap<AccountId, Balance>,
 ```
 
-hashmap is non-primative buildin type in the standard library used to store key and value pairs values, so here at line 12 and 14 we declaring two variables with hashmap types for storing data to be searchable efficiently using hashing
+hashmap is non-primative buildin type in the standard library used to store key and value pairs values.
 
 ----
 
@@ -98,7 +88,7 @@ hashmap is non-primative buildin type in the standard library used to store key 
  .collect()
 ```
 
-it is a trait used to loop over lists like lists, here we are using function [iter](https://doc.rust-lang.org/stable/std/iter/) to get iterable with borrowed data list then we use [map](https://doc.rust-lang.org/nightly/std/iter/struct.Map.html) to map a every element in the list and finally we use [collect](https://doc.rust-lang.org/nightly/std/iter/trait.Iterator.html#method.collect) to get an a collection
+it is a trait used to loop over lists like lists, here we are using function [iter](https://doc.rust-lang.org/stable/std/iter/) to get iterable with borrowed data list then we use [map](https://doc.rust-lang.org/nightly/std/iter/struct.Map.html) to map every element in the list and finally we use [collect](https://doc.rust-lang.org/nightly/std/iter/trait.Iterator.html#method.collect) to get an a collection.
 
 ----
 
@@ -124,7 +114,7 @@ rust has many types that represents sequence of characters
  current_account_id: "alice_near".to_string(),
 ```
 
-String is a UTF-8 dynamic groupable list used to store sequence of chars, and we here we call [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html) to get String from the variable of type '&str' we will check it next page
+String is a UTF-8 dynamic groupable list used to store sequence of chars, and we here we call [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html) to get String from the variable of type '&str' we will check it next page.
 
 ----
 
@@ -134,7 +124,7 @@ String is a UTF-8 dynamic groupable list used to store sequence of chars, and we
  let context = get_context("bob.near".to_string());
 ```
 
-it is slice version of String so it reference to other type of String ,here we are haveing a string literal of type '&'static str' and this mean it reference to a string with static [lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html) which will live all program lifetime
+it is slice version of String so it reference to other type of String ,here we are haveing a string literal of type '&'static str' and this mean it reference to a string with static [lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html) which will live all program lifetime.
 
 ---
 
@@ -152,7 +142,7 @@ like any other language you can define some reusable code and it is called funct
  }
 ```
 
-here we are defining a function with name 'get_context', and not that last statement we omit the ';' to return data from the function implicitly
+here we are defining a function with name 'get_context', and not that last statement we omit the ';' to return data from the function implicitly.
 
 ---
 
@@ -168,7 +158,7 @@ Rust is not object oriented language but you can define structs as data containe
 impl VotingContract {
 ```
 
-here we start to define functions to manipulate the derived type
+here we start to define functions to manipulate the derived type.
 
 ----
 
@@ -216,13 +206,13 @@ inside impl block we can define instance function like this code defines functio
  pub fn get_result(&self) -> Option<WrappedTimestamp> {
 ```
 
-here we define an instance function with '&self' this means the function [borrows](https://doc.rust-lang.org/rust-by-example/scope/borrow.html) the current object for readonly like in first line we use it to get data from the current object
+here we define an instance function with '&self' this means the function [borrows](https://doc.rust-lang.org/rust-by-example/scope/borrow.html) the current object for readonly like in first line we use it to get data from the current object.
 
 ---
 
 ## [ownership](https://doc.rust-lang.org/rust-by-example/scope/move.html) and [borrowing](https://doc.rust-lang.org/rust-by-example/scope/borrow.html)
 
-rust has unique concept called ownership and borrowing so when you assign variables to anther so most of the time instead of copying, the ownership taken by the second variable, so we can use borrowing and other things so keep the origin variable
+rust has unique concept called ownership and borrowing so when you assign variables to anther so most of the time instead of copying, the ownership taken by the second variable, so we can use borrowing and other things so keep the origin variable.
 
 ----
 
@@ -232,13 +222,13 @@ rust has unique concept called ownership and borrowing so when you assign variab
  validators.clone()
 ```
 
-as we mention when we use a variable in passing to function or to assign anther variable so the ownership is transfered and the origin variable move and this exist with non-primative types unless they implement [Copy trait](https://doc.rust-lang.org/std/marker/trait.Copy.html), so here we use clone function to make a copy of data and so as not to be moved and reused after that
+as we mention when we use a variable in passing to function or to assign anther variable so the ownership is transfered and the origin variable move and this exist with non-primative types unless they implement [Copy trait](https://doc.rust-lang.org/std/marker/trait.Copy.html), so here we use clone function to make a copy of data and so as not to be moved and reused after that.
 
 ---
 
 ## [Generic types](https://doc.rust-lang.org/book/ch10-00-generics.html)
 
-Every programming language has tools for effectively handling the duplication of concepts and write extensible agnostic
+Every programming language has tools for effectively handling the duplication of concepts and write extensible agnostic code.
 
 ----
 
@@ -252,7 +242,7 @@ impl Default for VotingContract {
 }
 ```
 
-here we impl [Default](https://doc.rust-lang.org/std/default/trait.Default.html) trait for 'LockupContract' type
+here we impl [Default](https://doc.rust-lang.org/std/default/trait.Default.html) trait for 'LockupContract' type.
 
 ---
 
@@ -269,7 +259,7 @@ Tests are Rust functions that verify that the non-test code is functioning in th
  fn test_voting_simple() {
 ```
 
-so here we are writing a function and anntotate it as test
+so here we are writing a function and anntotate it as test.
 
 ----
 
@@ -279,7 +269,7 @@ so here we are writing a function and anntotate it as test
  assert!(contract.result.is_some());
 ```
 
-here we use assert built in macro to assure that condtion is true
+here we use assert built in macro to assure that condtion is true.
 
 ----
 
@@ -289,7 +279,7 @@ here we use assert built in macro to assure that condtion is true
  testing_env!(context, Default::default(), Default::default(), validators);
 ```
 
-this [test macro](https://www.near-sdk.io/testing/unit-tests) provided by near and used to test in non-WASM target
+this [test macro](https://www.near-sdk.io/testing/unit-tests) provided by near and used to test in non-WASM target.
 
 ---
 
@@ -318,7 +308,7 @@ these lines import struct types from other crates that must be mentioned as a de
 mod tests {
 ```
 
-we can define new module in rust to structure our code, here we declaring a module
+we can define new module in rust to structure our code, here we declaring a module.
 
 ---
 
@@ -347,7 +337,7 @@ procedure macros allow creating syntax extentions like at first line we use [att
  pub fn new() -> Self {
 ```
 
-here we use attribute the function to define it as an [initialization](https://docs.near.org/docs/develop/contracts/rust/near-sdk-rs) function
+here we use attribute the function to define it as an [initialization](https://docs.near.org/docs/develop/contracts/rust/near-sdk-rs) function.
 
 ----
 
@@ -358,7 +348,7 @@ here we use attribute the function to define it as an [initialization](https://d
 #[cfg(test)]
 ```
 
-here we are using macro with cfg to make compile time switch and make this code only work with test and with target other than WASM
+here we are using macro with cfg to make compile time switch and make this code only work with test and with target other than WASM.
 
 ----
 
@@ -379,7 +369,7 @@ we attribute the test function might panic with this message.
 static ALLOC: near_sdk::wee_alloc::WeeAlloc = near_sdk::wee_alloc::WeeAlloc::INIT;
 ```
 
-in a given program, the standard library has one 'global' [memory](https://doc.rust-lang.org/std/alloc/index.html) allocator that is used for example by Box<T> and Vec<T>, and here this attribute allows configuring the choice of global allocator
+in a given program, the standard library has one 'global' [memory](https://doc.rust-lang.org/std/alloc/index.html) allocator that is used for example by Box<T> and Vec<T>, and here this attribute allows configuring the choice of global allocator.
 
 ----
 
@@ -389,5 +379,5 @@ in a given program, the standard library has one 'global' [memory](https://doc.r
  assert_eq!(contract.votes.len() as u128, i + 1);
 ```
 
-macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line call macro and as we see it is like function call but have '!' so here we call macro called 'assert_eq' to assure right equals left
+macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line call macro and as we see it is like function call but have '!' so here we call macro called 'assert_eq' to assure right equals left.
 
