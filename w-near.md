@@ -5,7 +5,7 @@
     }
 </style>
 
-# Learn rust with NEAR
+# Learn rust with NEAR (w-near)
 
 [w-near](https://github.com/near/core-contracts/tree/master/w-near)
 
@@ -23,7 +23,7 @@ Rust has variables like any other language such as primatives and non-primatives
  decimals: 24,
 ```
 
-here we assigning value to integer variable
+here we assigning value to integer variable.
 
 ----
 
@@ -55,13 +55,13 @@ Rust has enums to give names to const variables in additions it can hold data an
  ft: FungibleToken::new(b"a".to_vec()),
 ```
 
-vector is a dynamic list of homogeneous data stored in the heap, so here we are creating vector from string bytes
+vector is a dynamic list of homogeneous data stored in the heap, so here we are creating vector from string bytes.
 
 ---
 
 ## [control flow](https://doc.rust-lang.org/book/ch03-05-control-flow.html)
 
-you can run some code repeatedly or according to a condition
+you can run some code repeatedly or according to a condition.
 
 ----
 
@@ -86,7 +86,7 @@ we comparing the data and accordingly we decide to execute code inside 'if' or '
 
 ## [strings](https://doc.rust-lang.org/rust-by-example/std/str.html)
 
-rust has many types that represents sequence of characters
+rust has many types that represents sequence of characters.
 
 ----
 
@@ -96,7 +96,7 @@ rust has many types that represents sequence of characters
  spec: FT_METADATA_SPEC.to_string(),
 ```
 
-String is a UTF-8 dynamic groupable list used to store sequence of chars, and we here we call [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html) to get String from anther type
+String is a UTF-8 dynamic groupable list used to store sequence of chars, and we here we call [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html) to get String from anther type.
 
 ----
 
@@ -122,7 +122,7 @@ Rust is not object oriented language but you can define structs as data containe
 impl Contract {
 ```
 
-here we start to define functions to manipulate the derived type
+here we start to define functions to manipulate the derived type.
 
 ----
 
@@ -166,7 +166,7 @@ here we call a static function 'new' in the type 'FungibleToken' and this is wid
  }
 ```
 
-here we define an instance function with '&self' this means the function [borrows](https://doc.rust-lang.org/rust-by-example/scope/borrow.html) the current object for readonly like in first line we use it to get data from the current object
+here we define an instance function with '&self' this means the function [borrows](https://doc.rust-lang.org/rust-by-example/scope/borrow.html) the current object for readonly like in first line we use it to get data from the current object.
 
 ----
 
@@ -176,13 +176,13 @@ here we define an instance function with '&self' this means the function [borrow
  self.ft.storage_balance_bounds().min
 ```
 
-here in file 'legacy_storage.rs' we calling an instance function called 'storage_balance_bounds' to read some data
+here in file 'legacy_storage.rs' we calling an instance function called 'storage_balance_bounds' to read some data.
 
 ---
 
 ## [Generic types](https://doc.rust-lang.org/book/ch10-00-generics.html)
 
-Every programming language has tools for effectively handling the duplication of concepts and write extensible agnostic
+Every programming language has tools for effectively handling the duplication of concepts and write extensible agnostic.
 
 ----
 
@@ -192,7 +192,7 @@ Every programming language has tools for effectively handling the duplication of
 impl FungibleTokenMetadataProvider for Contract {
 ```
 
-here we impl a trait called FungibleTokenMetadataProvider  for a struct called 'Contract'
+here we impl a trait called FungibleTokenMetadataProvider  for a struct called 'Contract'.
 
 ---
 
@@ -233,7 +233,7 @@ pub struct Contract {
 }
 ```
 
-procedure macros allow creating syntax extentions like here we use [attribute](https://www.near-sdk.io/contract-structure/near-bindgen) for the struct to generate some code in order to validate near contract, at first line [derive-macro](https://doc.rust-lang.org/reference/attributes/derive.html) to generate implementation for these traits instead of making custom implementation for them.[BorshDeserialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshDeserialize.html), [BorshSerialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshSerialize.html) are used to convert to and from object and binary value but Serialize and Deserialize are used to convert to and from object and json value.
+procedure macros allow creating syntax extentions like here we use [attribute](https://www.near-sdk.io/contract-structure/near-bindgen) for the struct to generate some code in order to validate near contract, at first line [derive-macro](https://doc.rust-lang.org/reference/attributes/derive.html) to generate implementation for these traits instead of making custom implementation for them.[BorshDeserialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshDeserialize.html), [BorshSerialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshSerialize.html) are used to convert to and from object and binary value.
 
 ----
 
@@ -243,7 +243,7 @@ procedure macros allow creating syntax extentions like here we use [attribute](h
 #[allow(unused_imports)]
 ```
 
-here we use attibute to mute the compiler warning for unused imports
+here we use attibute to mute the compiler warning for unused imports.
 
 ----
 
@@ -253,7 +253,7 @@ here we use attibute to mute the compiler warning for unused imports
  #[payable]
 ```
 
-By the default the methods are not [payable](https://www.near-sdk.io/contract-interface/payable-methods) and they will panic if someone will attempt to transfer tokens to them during the invocation so we use this attribute to allow this
+By the default the methods are not [payable](https://www.near-sdk.io/contract-interface/payable-methods) and they will panic if someone will attempt to transfer tokens to them during the invocation so we use this attribute to allow this.
 
 ----
 
@@ -263,7 +263,7 @@ By the default the methods are not [payable](https://www.near-sdk.io/contract-in
  #[init]
 ```
 
-here we use attribute the function to define it as an [initialization](https://docs.near.org/docs/develop/contracts/rust/near-sdk-rs) function
+here we use attribute the function to define it as an [initialization](https://docs.near.org/docs/develop/contracts/rust/near-sdk-rs) function.
 
 ----
 
@@ -273,7 +273,7 @@ here we use attribute the function to define it as an [initialization](https://d
  assert!(amount > 0, "Requires positive attached deposit");
 ```
 
-macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line at file 'w_near.rs' calling macro and as we see it is like function call but have '!' so here we call macro called 'assert' to assert condtion is true if not so it will panic
+macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line at file 'w_near.rs' calling macro and as we see it is like function call but have '!' so here we call macro called 'assert' to assert condtion is true if not so it will panic.
 
 ----
 
@@ -283,5 +283,5 @@ macro rules it is a macro like function but evaluated at compile time in additio
  log!("Withdraw {} yoctoNEAR from {}", amount, account_id);
 ```
 
-this line call macro and as we see it is like function call but have '!' so here we call macro called [log](https://docs.rs/log/latest/log/) to log data for tracing
+this line call macro and as we see it is like function call but have '!' so here we call macro called [log](https://docs.rs/log/latest/log/) to log data for tracing.
 
