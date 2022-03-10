@@ -5,7 +5,7 @@
     }
 </style>
 
-# Learn rust with NEAR
+# Learn rust with NEAR (Multisig Factory)
 
 [Multisig Factory](https://github.com/near/core-contracts/tree/master/multisig-factory): Allows to create new Multisig contracts just by sending a transactions with the required configuration and funds. E.g. Removes need for using near repl and having wasm file available.
 
@@ -23,7 +23,7 @@ Rust has variables like any other language such as primatives and non-primatives
  num_confirmations: u64,
 ```
 
-here we are defining a variable as a parameter of type 'u64'
+here we are defining a variable as a parameter of type 'u64'.
 
 ----
 
@@ -33,7 +33,7 @@ here we are defining a variable as a parameter of type 'u64'
 const CREATE_CALL_GAS: u64 = 50_000_000_000_000;
 ```
 
-Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code, for example here we define u64 type const
+Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code, for example here we define u64 type const.
 
 ----
 
@@ -43,7 +43,7 @@ Rust has compile time const that recommended to be used with values that used ma
 static ALLOC: near_sdk::wee_alloc::WeeAlloc<'_> = near_sdk::wee_alloc::WeeAlloc::INIT;
 ```
 
-Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code,also note that using static favour const when we have data with big size
+Rust has run time nearly const that recommended to be used with values that used many times in addition to it gives readablity for the code,also note that using static favour const when we have data with big size and want to allocate memory for it.
 
 ----
 
@@ -53,7 +53,7 @@ Rust has compile time const that recommended to be used with values that used ma
 pub struct MultisigFactory {}
 ```
 
-Rust doesn't have classes but instead struct to define a container for data like in these line of code we define an empty struct
+Rust doesn't have classes but instead struct to define a container for data like in these line of code we define an empty struct.
 
 ----
 
@@ -76,7 +76,7 @@ Rust has enums to give names to const variables in additions other featurs we wi
  members: Vec<MultisigMember>,
 ```
 
-vector is a dynamic list of homogeneous data stored in the heap, so here we define a vector
+vector is a dynamic list of homogeneous data stored in the heap, so here we define a vector.
 
 ----
 
@@ -86,13 +86,13 @@ vector is a dynamic list of homogeneous data stored in the heap, so here we defi
 const CODE: &[u8] = include_bytes!("../../multisig2/res/multisig2.wasm");
 ```
 
-slice lets you reference contiguous sequence of elements in a collection, here we call [macro](https://doc.rust-lang.org/rust-by-example/macros.html) that gets the bytes in slice with [static lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html)
+slice lets you reference contiguous sequence of elements in a collection, here we call [macro](https://doc.rust-lang.org/rust-by-example/macros.html) that gets the bytes in slice with [static lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html).
 
 ---
 
 ## [strings](https://doc.rust-lang.org/rust-by-example/std/str.html)
 
-rust has many types that represents sequence of characters
+rust has many types that represents sequence of characters.
 
 ----
 
@@ -102,7 +102,7 @@ rust has many types that represents sequence of characters
  .to_string()
 ```
 
-String is a UTF-8 dynamic groupable list used to store sequence of chars, and we here we call [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html) to get String from the variable anther type
+String is a UTF-8 dynamic groupable list used to store sequence of chars, and we here we call [to_string](https://doc.rust-lang.org/std/string/trait.ToString.html) to get String from the variable anther type.
 
 ----
 
@@ -112,7 +112,7 @@ String is a UTF-8 dynamic groupable list used to store sequence of chars, and we
 const CODE: &[u8] = include_bytes!("../../multisig2/res/multisig2.wasm");
 ```
 
-it is slice version of String so it reference to other type of String ,here we are haveing a string literal of type '&'static str' and this mean it reference to a string with static [lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html) which will live all program lifetime
+it is slice version of String so it reference to other type of String ,here we are haveing a string literal of type '&'static str' and this mean it reference to a string with static [lifetime](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html) which will live all program lifetime.
 
 ---
 
@@ -124,7 +124,7 @@ Rust is not object oriented language but you can define structs as data containe
 
 ### [impl](https://doc.rust-lang.org/std/keyword.impl.html)
 
-here we start to define functions to manipulate the derived type
+here we start to define functions to manipulate the derived type.
 
 ----
 
@@ -152,7 +152,7 @@ inside impl block we can define instance function like this code defines functio
  .function_call(
 ```
 
-here we are creating a variable and call chain of instance functions on it and this is because here we are returning same object from the function
+here we are creating a variable and call chain of instance functions on it and this is because here we are returning same object from the function.
 
 ---
 
@@ -187,7 +187,7 @@ Macros are widely used in metaprogramming for generating code at compile time.
 #[near_bindgen]
 ```
 
-procedure macros allow creating syntax extentions like at first line we use [attribute](https://www.near-sdk.io/contract-structure/near-bindgen) for the struct to generate some code in order to validate near contract
+procedure macros allow creating syntax extentions like at first line we use [attribute](https://www.near-sdk.io/contract-structure/near-bindgen) for the struct to generate some code in order to validate near contract.
 
 ----
 
@@ -207,7 +207,7 @@ procedure macros allow creating syntax extentions like at first line we use [att
  #[payable]
 ```
 
-[payable](https://www.near-sdk.io/contract-interface/payable-methods) allows the method to accept token transfer together with the function call
+[payable](https://www.near-sdk.io/contract-interface/payable-methods) allows the method to accept token transfer together with the function call.
 
 ----
 
@@ -217,7 +217,7 @@ procedure macros allow creating syntax extentions like at first line we use [att
 #[serde(crate = "near_sdk::serde", untagged)]
 ```
 
-used to select [serde](serde.rs) crate and so we give it a path to it here
+used to select [serde](serde.rs) crate and so we give it a path to it here.
 
 ----
 
@@ -227,7 +227,7 @@ used to select [serde](serde.rs) crate and so we give it a path to it here
 const CODE: &[u8] = include_bytes!("../../multisig2/res/multisig2.wasm");
 ```
 
-macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line call macro and as we see it is like function call but have '!' so here we call macro called 'include_bytes' to read data from file in the compilation time
+macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line call macro and as we see it is like function call but have '!' so here we call macro called 'include_bytes' to read data from file in the compilation time.
 
 ----
 
@@ -237,5 +237,5 @@ macro rules it is a macro like function but evaluated at compile time in additio
  json!({ "members": members, "num_confirmations": num_confirmations })
 ```
 
-here we get json format with this data
+here we get json format with this data.
 
