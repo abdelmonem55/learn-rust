@@ -5,13 +5,13 @@
     }
 </style>
 
-# Learn rust with NEAR
+# Learn rust with NEAR (test-token)
 
 contract: [test-token](https://github.com/ref-finance/ref-contracts/blob/main/test-token/src/lib.rs) 
 
 ---
 
-## Variables and constant
+## Variables
 
 Rust has variables like any other language such as primatives and non-primatives and there are some special features we will disscus them one by one.
 
@@ -23,19 +23,7 @@ Rust has variables like any other language such as primatives and non-primatives
  transfers_enabled: bool,
 ```
 
-here we are defining a variable as a parameter of type 'bool'
-
-----
-
-### [const](https://doc.rust-lang.org/std/keyword.const.html)
-
-Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code, for example here we define a const for image csv value that might be used many times in the program.
-
-----
-
-### [static](https://doc.rust-lang.org/reference/items/static-items.html)
-
-Rust has compile time const that recommended to be used with values that used many times in addition to it gives readablity for the code, for example here we define a const for image csv value that might be used many times in the program.
+here we are defining a variable as a parameter of type 'bool'.
 
 ----
 
@@ -48,36 +36,6 @@ pub struct Contract {
 ```
 
 Rust doesn't have classes but instead struct to define a container for data like in these line of code we define a struct with variable 'token'.
-
-----
-
-### [enum](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html)
-
-Rust has enums to give names to const variables in additions other featurs we will explore them in next lessons like in this code we define new type called 'StorageKey' with two possibilities 'FungibleToken' and 'Metadata'.
-
-----
-
-### [vector](https://doc.rust-lang.org/std/vec/struct.Vec.html)
-
-```rs=13
-pub struct Contract {
-    token: FungibleToken,
-}
-```
-
-vector is a dynamic list of homogeneous data stored in the heap, so here we are creating vector with help of 'to_vec' function from bytes 
-
----
-
-## functions
-
-like any other language you can define some reusable code and it is called function.
-
-----
-
-### function definition and calling
-
-here we are defining a function with name 'get_context', parameter and return type, also at lines 111th to 114 we call functions in a variable called 'builder' and they are [instance functions](https://turreta.com/2019/10/14/static-and-instance-methods-in-struct/) but we will learn them in the next section.
 
 ---
 
@@ -93,7 +51,7 @@ Rust is not object oriented language but you can define structs as data containe
 impl Contract {
 ```
 
-here we start to define functions to manipulate the derived type
+here we start to define functions to manipulate the derived type.
 
 ----
 
@@ -142,7 +100,7 @@ inside impl block we can define instance function like this code defines functio
  }
 ```
 
-here we define an instance function with '&self' this means the function [borrows](https://doc.rust-lang.org/rust-by-example/scope/borrow.html) the current object for readonly like in first line we use it to get data from the current object
+here we define an instance function with '&self' this means the function [borrows](https://doc.rust-lang.org/rust-by-example/scope/borrow.html) the current object for readonly like in first line we use it to get data from the current object.
 
 ----
 
@@ -152,29 +110,30 @@ here we define an instance function with '&self' this means the function [borrow
  self.token.internal_register_account(account_id.as_ref());
 ```
 
-here we are calling an instance function to get data on 'token' variable
+here we are calling an instance function to get data on 'token' variable.
 
 ---
 
 ## [ownership](https://doc.rust-lang.org/rust-by-example/scope/move.html) and [borrowing](https://doc.rust-lang.org/rust-by-example/scope/borrow.html)
 
-rust has unique concept called ownership and borrowing so when you assign variables to anther so most of the time instead of copying, the ownership taken by the second variable, so we can use borrowing and other things so keep the origin variable
+rust has unique concept called ownership and borrowing so when you assign variables to anther so most of the time instead of copying, the ownership taken by the second variable, so we can use borrowing and other things so keep the origin variable.
 
 ----
 
 ### passing variable to function and ownership
 
-```rs=58
- testing_env!(context.build());
+```rs=33
+ self.token
+ .internal_withdraw(account_id.as_ref(), amount.into());
 ```
 
-as we mention when we use a variable in passing to function or to assign anther variable so the ownership is transfered and the origin variable move and this exist with non-primative types unless they implement [Copy trait](https://doc.rust-lang.org/std/marker/trait.Copy.html), so instead of a copy of the variable passed, the variable will be moved
+as we mention when we use a variable in passing to function or to assign anther variable so the ownership is transfered and the origin variable move and this exist with non-primative types unless they implement [Copy trait](https://doc.rust-lang.org/std/marker/trait.Copy.html), so instead of a copy of the variable passed, the variable will be moved.
 
 ---
 
 ## [Generic types](https://doc.rust-lang.org/book/ch10-00-generics.html)
 
-Every programming language has tools for effectively handling the duplication of concepts and write extensible agnostic
+Every programming language has tools for effectively handling the duplication of concepts and write extensible agnostic.
 
 ----
 
@@ -241,7 +200,7 @@ these lines import struct types from other crates that must be mentioned as a de
 mod tests {
 ```
 
-we can define new module in rust to structure our code, here we declaring a module at second line ,and at second line we annotate that it is a test module
+we can define new module in rust to structure our code, here we declaring a module at second line ,and at second line we annotate that it is a test module.
 
 ---
 
@@ -258,7 +217,7 @@ Macros are widely used in metaprogramming for generating code at compile time.
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
 ```
 
-procedure macros allow creating syntax extentions like at first line we use [attribute](https://www.near-sdk.io/contract-structure/near-bindgen) for the struct to generate some code in order to validate near contract, at line 39 [derive-macro](https://doc.rust-lang.org/reference/attributes/derive.html) to generate implementation for these traits instead of making custom implementation for them.[BorshDeserialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshDeserialize.html), [BorshSerialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshSerialize.html) are used to convert to and from object and binary value but Serialize and Deserialize are used to convert to and from object and json value.
+procedure macros allow creating syntax extentions like at first line we use [attribute](https://www.near-sdk.io/contract-structure/near-bindgen) for the struct to generate some code in order to validate near contract, at second line [derive-macro](https://doc.rust-lang.org/reference/attributes/derive.html) to generate implementation for these traits instead of making custom implementation for them.[BorshDeserialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshDeserialize.html), [BorshSerialize](https://docs.rs/borsh/latest/borsh/de/trait.BorshSerialize.html) are used to convert to and from object and binary value but Serialize and Deserialize are used to convert to and from object and json value.
 
 ----
 
@@ -268,7 +227,7 @@ procedure macros allow creating syntax extentions like at first line we use [att
  #[init]
 ```
 
-here we use attribute the function to define it as an [initialization](https://docs.near.org/docs/develop/contracts/rust/near-sdk-rs) function
+here we use attribute the function to define it as an [initialization](https://docs.near.org/docs/develop/contracts/rust/near-sdk-rs) function.
 
 ----
 
@@ -278,7 +237,7 @@ here we use attribute the function to define it as an [initialization](https://d
 #[cfg(test)]
 ```
 
-it a macro to make a compile time switch according a condition and here we make it for testing
+it a macro to make a compile time switch according a condition and here we make it for testing.
 
 ----
 
@@ -288,7 +247,7 @@ it a macro to make a compile time switch according a condition and here we make 
  testing_env!(context.build());
 ```
 
-macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line call macro and as we see it is like function call but have '!' so here we call macro called [testing_env](https://www.near-sdk.io/testing/unit-tests)  macro will initialize the blockchain interface with the VMContext which is either initialized through VMContextBuilder or manually through itself
+macro rules it is a macro like function but evaluated at compile time in addition to have ability to generate codes, this line call macro and as we see it is like function call but have '!' so here we call macro called [testing_env](https://www.near-sdk.io/testing/unit-tests)  macro will initialize the blockchain interface with the VMContext which is either initialized through VMContextBuilder or manually through itself.
 
 ----
 
@@ -298,5 +257,5 @@ macro rules it is a macro like function but evaluated at compile time in additio
  assert_eq!(contract.ft_balance_of(accounts(0)), 1_000_000.into());
 ```
 
-we are using [assert_eq]() in unit test to assert right equals left other wise the test will fail
+we are using [assert_eq](https://doc.rust-lang.org/std/macro.assert_eq.html) in unit test to assert right equals left other wise the test will fail.
 
